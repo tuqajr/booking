@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Models\Hotel;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PageController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,5 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Home Page
+Route::get('/home', [PageController::class, 'home'])->name('home');
+
+// Hotels Page
+Route::get('/hotels', [PageController::class, 'hotels'])->name('hotels');
+
+// Contact Us Page
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 require __DIR__.'/auth.php';
