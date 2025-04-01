@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-900 text-white shadow-lg">
+<nav x-data="{ open: false }" class="bg-white-900 text-white shadow-lg">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
@@ -24,14 +24,14 @@
             <!-- User Dropdown or Login/Register -->
             <div class="hidden md:flex items-center space-x-4">
                 @auth
+                <a href="{{ route('profile.edit') }}" class="mr-3">
+                    <i class="fa-solid fa-user text-black"></i>
+                </a>
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-black hover:text-gray-300 focus:outline-none">
                                 <!-- Profile Icon (Clickable) -->
-                                <a href="{{ route('profile.edit') }}" class="mr-3">
-                                <i class="fa-solid fa-user"></i>
-                                   
-                                </a>
+                                
                                 <span>{{ Auth::user()->name }}</span>
                                 <svg class="ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
