@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->decimal('rating', 3, 1)->nullable(); // e.g. 4.5
             $table->boolean('is_featured')->default(false);
+            $table->text('amenities')->nullable();
             $table->timestamps();
         });
     }

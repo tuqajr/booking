@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us</title>
+<x-app-layout>
+  {{-- <x-slot name="header">
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          {{ __('Contact Us') }}
+      </h2>
+  </x-slot> --}}
     <style>
      
 .body-b {
@@ -11,9 +11,9 @@
   background-color: #f3f4f6;
   margin: 0;
   padding: 0;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   min-height: 100vh;
   background-image: linear-gradient(135deg, #b1c9f2, #f3f4f6);
 }
@@ -26,6 +26,7 @@
   width: 85%;
   max-width: 450px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* margin-top: 15px; */
 }
 
 .container-c:hover {
@@ -66,7 +67,7 @@ h2:after {
   gap: 12px;
 }
 
-input, textarea {
+.inp, textarea {
   padding: 12px;
   border: 1px solid #dfe4e8;
   border-radius: 6px;
@@ -76,7 +77,7 @@ input, textarea {
   background-color: #fafafa;
 }
 
-input:focus, textarea:focus {
+.inp:focus, textarea:focus {
   border-color: #76b3c4;
   box-shadow: 0 0 0 2px rgba(118, 179, 196, 0.2);
   background-color: white;
@@ -138,7 +139,7 @@ input:focus, textarea:focus {
   100% { transform: scale(1); }
 }
 
-input:focus, textarea:focus {
+.inp:focus, textarea:focus {
   animation: gentlePulse 1.5s infinite;
   border-color: #76b3c4;
 }
@@ -154,7 +155,7 @@ input:focus, textarea:focus {
     font-size: 22px;
   }
   
-  input, textarea, .bttn {
+  .inp, textarea, .bttn {
     padding: 10px;
     font-size: 14px;
   }
@@ -166,7 +167,7 @@ input:focus, textarea:focus {
   opacity: 0.8;
 }
 
-input:hover, textarea:hover {
+.inp:hover, textarea:hover {
   border-color: #c1c9d5;
   background-color: rgba(193, 201, 213, 0.05);
 }
@@ -189,15 +190,22 @@ textarea {
   height: 120px;
 }
 
+main{
+  display: flex;
+  /* height: 70vh; */
+  justify-content: center;
+  align-content: center;
+  margin: 3vh;
+}
+
     </style>
-  </head>
-  <body class="body-b">
+  <body class="body-b" >
     <div class="container-c">
       <h2>Contact Us</h2>
       <form id="contact-form">
-        <input type="text" id="name" placeholder="Name" name="name" required />
-        <input type="text" id="phone" placeholder="070-000-000-0" name="phone" required />
-        <input type="email" id="email" placeholder="Email" name="email" required />
+        <input type="text" id="name" placeholder="Name" name="name" required class="inp" />
+        <input type="text" id="phone" placeholder="070-000-000-0" name="phone" required class="inp" />
+        <input type="email" id="email" placeholder="Email" name="email" required class="inp" />
         <textarea id="message" name="message" placeholder="Your message..." required style="resize: vertical; width: 100%; height: 150px"></textarea>
         <button type="submit" class="bttn">Submit</button>
       </form>
@@ -248,6 +256,7 @@ textarea {
           emailjs.send("service_843dy3s", "template_mgzxx43", params)
             .then(() => {
               $("#feedback").show();
+              $("#loading").hide();
               $("#contact-form")[0].reset();
             })
             .catch((error) => {
@@ -281,4 +290,4 @@ textarea {
       });
     </script>
   </body>
-</html>
+</x-app-layout>

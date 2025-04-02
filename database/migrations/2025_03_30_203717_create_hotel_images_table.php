@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
             $table->string('image_path');
+            $table->string('caption')->nullable();
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }

@@ -1,3 +1,10 @@
+<x-app-layout>
+  <x-slot name="header">
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          {{ __('Hotels') }}
+      </h2>
+  </x-slot>
+
 <style>
 /* Main Colors */
 :root {
@@ -353,7 +360,7 @@ h3.mb-3:before, h3.my-4:before {
         <h1>Explore Hotels</h1>
         
         <form action="{{ route('hotels.index') }}" method="GET" class="filters-inline">
-            <div class="filter-item">
+            {{-- <div class="filter-item">
                 <label>Price Range</label>
                 <select name="price_range" class="form-select">
                     <option value="">All Prices</option>
@@ -363,7 +370,7 @@ h3.mb-3:before, h3.my-4:before {
                     <option value="500-1000" {{ request('price_range') == '500-1000' ? 'selected' : '' }}>500 - 1000</option>
                     <option value="1000-10000" {{ request('price_range') == '1000-10000' ? 'selected' : '' }}>More than 1000</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="filter-item">
                 <label>Region</label>
@@ -371,7 +378,7 @@ h3.mb-3:before, h3.my-4:before {
                     <option value="">All Regions</option>
                     @foreach($regions as $region)
                     <option value="{{ $region->id }}" {{ request('region_id') == $region->id ? 'selected' : '' }}>
-                        {{ $region->region_name }}
+                        {{ $region->name }}
                     </option>
                     @endforeach
                 </select>
@@ -1091,3 +1098,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }).addTo(map);
 });
 </script>
+</x-app-layout>
