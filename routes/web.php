@@ -6,9 +6,9 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+use App\Http\Controllers\FeaturedHotelsController;
+Route::get('/', [FeaturedHotelsController::class, 'index']
+)->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 
 
 // Home Page
-Route::get('/home', [PageController::class, 'home'])->name('home');
+Route::get('/home', [FeaturedHotelsController::class, 'index'])->name('home');
 
 // Hotels Page
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
