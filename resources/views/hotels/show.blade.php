@@ -14,6 +14,9 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.min.css">
     <style>
+        a{
+            text-decoration: none;
+        }
         :root {
             --primary-color: #1e95d4;
             --secondary-color: #7dd1df;
@@ -31,6 +34,12 @@
             border: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             margin-bottom: 24px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
         .card-header {
@@ -63,14 +72,8 @@
         }
         
         .hotel-card {
-            transition: transform 0.3s, box-shadow 0.3s;
             border-radius: 10px;
             overflow: hidden;
-        }
-        
-        .hotel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
         .carousel-item img {
@@ -86,7 +89,7 @@
             text-align: center;
         }
         
-        .sticky-booking {
+        .sticky-info {
             position: sticky;
             top: 20px;
         }
@@ -139,19 +142,63 @@
             color: white;
         }
         
-        /* Map Style */
         #hotelMap {
             height: 400px;
             width: 100%;
             border-radius: 8px;
         }
         
-        .map-marker-label {
+        .book-now-card {
+            background: linear-gradient(145deg, var(--primary-color), #156fa0);
+            color: white;
+        }
+        
+        .book-now-btn {
             background-color: white;
-            border-radius: 4px;
-            padding: 5px 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: var(--primary-color);
             font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .book-now-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-thumbnail {
+            height: 80px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .gallery-thumbnail:hover {
+            transform: scale(1.05);
+        }
+        
+        .amenity-item {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        
+        .amenity-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .special-offer {
+            border-left: 4px solid #28a745;
+            padding-left: 10px;
+            margin-bottom: 10px;
+            background-color: rgba(40, 167, 69, 0.1);
+            padding: 10px;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -163,14 +210,12 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h1 class="mb-3"><i class="fas fa-hotel me-2 text-primary"></i>{{ $hotel->name }}</h1>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                             <div>
                                 <span class="badge bg-info me-2">
                                     <i class="fas fa-map-marker-alt"></i> {{ $hotel->region->name }}
                                 </span>
-                                <span class="review-badge me-2">
-                                    <i class="fas fa-thumbs-up"></i> 8.9/10
-                                </span>
+                                
                                 <span class="text-warning">
                                     @for($i = 1; $i <= 5; $i++)
                                         @if($i <= $hotel->stars)
@@ -181,10 +226,14 @@
                                     @endfor
                                 </span>
                             </div>
-                            <div class="price-tag">
+                            {{-- <div class="price-tag">
                                 <i class="fas fa-tag me-1"></i> {{ number_format($hotel->price_per_night) }} $ / night
-                            </div>
+                            </div> --}}
                         </div>
+                        {{-- {{ route('hotels.booking', $hotel->id) }} --}}
+                        <a href="{{ route('reservations.hotel', $hotel->id) }}" class="btn btn-primary mt-2">
+                            <i class="fas fa-calendar-check me-1"></i> Book Now
+                        </a>
                     </div>
                 </div>
                 
@@ -249,38 +298,38 @@
                             @endphp
                             @foreach($amenities as $amenity)
                                 <div class="col-md-4 mb-2">
-                                    <div class="d-flex align-items-center">
+                                    <div class="amenity-item d-flex align-items-center">
                                         <i class="fas {{ $amenity }} amenities-icon"></i> {{ trim($amenity) }}
                                     </div>
                                 </div>
                             @endforeach
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-wifi amenities-icon"></i> Free WiFi
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-swimming-pool amenities-icon"></i> Swimming Pool
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-dumbbell amenities-icon"></i> Fitness Center
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-utensils amenities-icon"></i> Restaurant
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-spa amenities-icon"></i> Spa
                                 </div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-parking amenities-icon"></i> Free Parking
                                 </div>
                             </div>
@@ -288,6 +337,7 @@
                     </div>
                 </div>
                 @endif
+
                 
                 <!-- Hotel Features -->
                 <div class="card mb-4">
@@ -297,32 +347,32 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-clock feature-icon"></i> 24-hour front desk
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-credit-card feature-icon"></i> Accepts credit cards
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-baby feature-icon"></i> Family friendly
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-paw feature-icon"></i> Pet friendly
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-smoking-ban feature-icon"></i> Non-smoking rooms
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="d-flex align-items-center">
+                                <div class="amenity-item d-flex align-items-center">
                                     <i class="fas fa-wheelchair feature-icon"></i> Accessible
                                 </div>
                             </div>
@@ -346,63 +396,79 @@
             </div>
             
             <div class="col-lg-4">
-                <!-- Booking Form -->
-                <div class="card sticky-booking">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Book Now</h5>
+                <!-- Book Now Card -->
+                <div class="card book-now-card mb-4">
+                    <div class="card-body text-center">
+                        <h3><i class="fas fa-hotel me-2"></i>{{ $hotel->name }}</h3>
+                        <div class="text-warning mb-2">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $hotel->stars)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        {{-- <h4 class="mb-3">{{ number_format($hotel->price_per_night) }} $ / night</h4> --}}
+                        <a href="{{ route('reservations.hotel', $hotel->id) }}" class="btn book-now-btn w-100">
+                            {{-- {{ route('reservations.hotel', $hotel->id) }} --}}
+                            <i class="fas fa-calendar-check me-1"></i> Book This Hotel
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Info -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Quick Info</h5>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-plane-arrival me-1"></i> Check-in Date</label>
-                                <input type="date" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-plane-departure me-1"></i> Check-out Date</label>
-                                <input type="date" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-door-open me-1"></i> Number of Rooms</label>
-                                <select class="form-select">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-user me-1"></i> Number of Adults</label>
-                                <select class="form-select">
-                                    @for($i = 1; $i <= 10; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"><i class="fas fa-child me-1"></i> Number of Children</label>
-                                <select class="form-select">
-                                    @for($i = 0; $i <= 5; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 py-2"><i class="fas fa-check-circle me-1"></i> Confirm Booking</button>
-                        </form>
-                        
-                        <!-- Special Offers -->
-                        <div class="mt-4">
-                            <h6 class="mb-2"><i class="fas fa-gift text-primary me-1"></i> Special Offers</h6>
-                            <div class="d-flex align-items-center mb-2 p-2 bg-light rounded">
-                                <i class="fas fa-percent text-success me-2"></i>
-                                <div>10% off for stays longer than 3 nights</div>
-                            </div>
-                            <div class="d-flex align-items-center p-2 bg-light rounded">
-                                <i class="fas fa-utensils text-warning me-2"></i>
-                                <div>Free breakfast for loyalty members</div>
-                            </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Check-in Time
+                                <span class="fw-bold">2:00 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Check-out Time
+                                <span class="fw-bold">12:00 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Cancellation
+                                <span class="fw-bold text-success">Free up to 24hrs</span>
+                            </li>
+                            {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Distance to City Center
+                                <span class="fw-bold">2.5 km</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Airport Transfer
+                                <span class="fw-bold">Available</span>
+                            </li> --}}
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Special Offers -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-gift me-2"></i>Special Offers</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="special-offer mb-3">
+                            <h6 class="mb-2"><i class="fas fa-utensils text-warning me-1"></i> Breakfast Offer</h6>
+                            <p class="mb-0">Free breakfast for loyalty members</p>
+                        </div>
+                        <div class="special-offer">
+                            <h6 class="mb-2"><i class="fas fa-glass-cheers text-danger me-1"></i> Weekend Special</h6>
+                            <p class="mb-0">Complimentary welcome drink on weekends</p>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Weather Widget -->
+                
             </div>
+        </div>
         </div>
         
         <!-- Similar Hotels -->
