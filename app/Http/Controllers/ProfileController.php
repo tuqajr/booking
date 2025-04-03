@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Hotel;
 
 class ProfileController extends Controller
 {
@@ -16,8 +17,16 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $wishlist = $user->wishlist()->with('hotel')->get();
+        $recentBookings = $user->bookings()->with('hotel')->latest()->take(5)->get();
+        $recentReviews = $user->reviews()->with('hotel')->latest()->take(5)->get();
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'wishlist' => $wishlist,
+            'recentBookings' => $recentBookings,
+            'recentReviews' => $recentReviews,
         ]);
     }
 
@@ -56,5 +65,38 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Add a hotel to the user's wishlist.
+     */
+    public function addToWishlist(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'hotel_id' => 'required|exists:hotels,id',
+        ]);
+
+        $user = $request->user();
+        $hotel = Hotel::findOrFail($request->hotel_id);
+
+        if (!$user->wishlist->contains($hotel)) {
+            $user->wishlist()->attach($hotel);
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'wishlist-updated');
+    }
+
+    /**
+     * Remove a hotel from the user's wishlist.
+     */
+    public function removeFromWishlist(Request $request, Hotel $hotel): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->wishlist->contains($hotel)) {
+            $user->wishlist()->detach($hotel);
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'wishlist-updated');
     }
 }
