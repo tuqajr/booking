@@ -4,7 +4,7 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="text-xl font-bold tracking-wide text-black hover:text-gray-300">
-                    HotelBooking
+                    JoHotels
                 </a>
             </div>
 
@@ -21,7 +21,7 @@
                 </x-nav-link>
                 @auth
         @if(auth()->user()->role === 'admin') 
-            <x-nav-link >
+            <x-nav-link :href="route('admin.homepage.index')" :active="request()->routeIs('admin.users.index')">
                 {{-- :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" --}}
                 {{ __('Admin Panel') }}
             </x-nav-link>
@@ -33,7 +33,8 @@
             <div class="hidden md:flex items-center space-x-4">
                 @auth
                 <a href="{{ route('profile.edit') }}" class="mr-3">
-                    <i class="fa-solid fa-user text-black"></i>
+                    {{-- <i class="fa-solid fa-user text-black"></i> --}}
+                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="" width="32" height="32" class="rounded-circle me-2" style="border-radius: 50%; width: 30px; height: 30px">
                 </a>
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">

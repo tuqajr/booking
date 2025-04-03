@@ -35,7 +35,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <p class="text-gray-500 text-sm">Booking ID</p>
-                                <p class="font-medium text-gray-800">{{ $booking->id }}</p>
+                                <p class="font-medium text-gray-800">200025-{{ $booking->id }}</p>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <p class="text-gray-500 text-sm">Booking Status</p>

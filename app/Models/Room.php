@@ -9,6 +9,13 @@ class Room extends Model
 {
     use HasFactory;
     //
+    protected $fillable = [
+        'hotel_id',
+        'room_type',
+        'capacity',
+        'price',
+        'description',
+    ];
 
     public function setRoomTypeAttribute($value) {
         $allowedTypes = ['Single room', 'Double room', 'Twin room', 'Suite'];

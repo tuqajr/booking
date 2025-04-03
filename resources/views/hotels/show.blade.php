@@ -390,16 +390,51 @@
                             <div>
                                 <h6 class="mb-0">Read what our guests have to say</h6>
                             </div>
-                            <a href="/reviews/{{ $hotel->id }}" class="btn btn-primary">
+                            
+                            <a href="/hotels/{{ $hotel->id }}/reviews/create" class="btn btn-primary">
                                 <i class="fas fa-star me-1"></i> Write a Review
                             </a>
                         </div>
                 
                         <!-- Placeholder for reviews summary -->
-                        <div class="text-center py-4">
+                        {{-- <div class="text-center py-4">
                             <i class="fas fa-comment-alt fa-3x text-secondary mb-3"></i>
                             <p>Be the first to review this hotel!</p>
+                        </div> --}}
+                        @if ($reviews->count() > 0)
+        <div class="space-y-6">
+            @foreach ($reviews as $review)
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <div class="px-6 py-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="flex flex-col gap-y-1 items-center">
+                                    
+                                    <p class="text-sm text-gray-600">by {{ $review->user->name }}</p>
+                                    <p class="text-xs text-gray-500">{{ $review->created_at->format('F j, Y') }}</p>
+                                </div>
+                            </div>
+                            
+                            
                         </div>
+                        <div >
+                            <p class="text-gray-700">{{ $review->review }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        
+        <div class="mt-6">
+            {{ $reviews->links() }}
+        </div>
+    @else
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-6 py-4 text-center">
+                <p class="text-gray-600">No reviews yet. Be the first to share your experience!</p>
+            </div>
+        </div>
+    @endif
                     </div>
                 </div>
 
