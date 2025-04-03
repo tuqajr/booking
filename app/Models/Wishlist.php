@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Wishlist extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'user_id', 'hotel_id'
-    ];
+    //
 
     public function user() {
         return $this->belongsTo(User::class);

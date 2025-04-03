@@ -1,0 +1,116 @@
+.drop-border {
+    border: 0px;
+    background-color: transparent;
+  }
+  
+  :root {
+    --main-color: rgb(30, 149, 212);      
+    --accent-color: rgb(125, 209, 223);   
+    --secondary-color: rgb(181, 229, 231); 
+  }
+  
+  body {
+    background-color: #e8e8e8;
+  
+  }
+  
+  .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  
+    background-color: var(--main-color);
+  }
+  
+  .btn-primary {
+    background-color: var(--main-color);
+    border-color:  var(--main-color);
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.4);
+  
+  
+  }
+  
+  .btn-secondary, .btn-success, .btn-danger {
+  
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.4);
+  
+  }
+  
+  .alert-dismissible.fade {
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .table, .form-control, .form-select, .modal {
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.2);
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+  }
+  
+  .pagination .page-link {
+    color: var(--main-color);
+  }
+  
+  .spinner_border {
+    border-color: var(--main-color) !important;
+    
+  }.text-primary {
+    color: var(--main-color) !important;
+  }
+  
+  .review_actions .approve-action.dropdown-item:hover,
+  .approve-action.dropdown-item:focus  {
+    color: var(--main-color) !important;
+    background-color: #e2e3e500 !important;
+  }
+  
+  .review_actions .reject-action.dropdown-item:hover,
+  .reject-action.dropdown-item:focus {
+    color: #b51c3b !important;
+    background-color: #e2e3e500 !important;
+  }
+  
+  .review_actions .delete-action.dropdown-item:hover,
+  .delete-action.dropdown-item:focus {
+    color: #030405 !important;
+    background-color: #e2e3e500 !important;
+  }
+  
+  #spinner {
+    position: fixed;
+    top: 30%; 
+    left: calc(50% + 140px); 
+    transform: translate(-50%, -50%); 
+  }
+  
+  .card {
+    width: 220px;
+    height: 254px;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe,
+               -15px -15px 30px #ffffff;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: -20px 20px 60px #bebebe,
+    20px -20px 60px #ffffff;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+  }
+  
+  .card-text + small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #6c757d; /* Light gray */
+  }
+  
+  .card .text-muted {
+      font-size: 0.875rem; /* Slightly smaller font for sub-statistics */
+      margin-top: 0.5rem;
+  }
+  
+  .card .text-muted i {
+      margin-right: 5px; /* Add spacing between icons and text */
+  }
