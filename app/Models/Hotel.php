@@ -2,22 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Hotel extends Model
 {
     use HasFactory;
 
-    public function rooms() {
-        return $this->hasMany(Room::class);
-    }
+    protected $fillable = ['name', 'location', 'rating', 'description'];
 
-    public function reviews() {
-        return $this->hasMany(Review::class);
-    }
-
-    public function bookings() {
-        return $this->hasManyThrough(Booking::class, Room::class);
+    public function users() {
+        return $this->belongsToMany(User::class, 'wishlists');
     }
 }
